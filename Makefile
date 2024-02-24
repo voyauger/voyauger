@@ -14,7 +14,7 @@ windows:
         GOOS=windows GOARCH=amd64 go build -o $(IMAGE)-windows main.go
         
 build:
-        docker build -t quay.io/projectquay/golang:latest .
+        docker build -t %{REGISTRY}/%{IMAGE}:latest.
         
 clean:
-        docker rmi quay.io/projectquay/golang:latest
+        docker rmi %{REGISTRY}/%{IMAGE}:latest
