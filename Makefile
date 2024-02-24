@@ -1,5 +1,5 @@
 REGISTRY=quay.io
-IMAGE=/projectquay/golang:1.20 
+IMAGE=golang:1.20 
 
 linux:
         GOOS=linux GOARCH=amd64 go build -o $(IMAGE)-linux main.go
