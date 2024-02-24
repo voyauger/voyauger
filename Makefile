@@ -17,4 +17,5 @@ windows:
 
 # Видалення новоствореного образу
 clean:
-	docker rmi <golang:1.20>
+	 rm main main-linux main-windows main-macos main-linux-arm 
+        docker rmi jira:latest    
