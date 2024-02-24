@@ -1,13 +1,13 @@
-FROM $(REGISTRY)/golang:1.20 as builder
+FROM quay.io/projectquay/golang:1.20 as builder
 
-COPY . /app 
 WORKDIR /app
+COPY . .
 
-RUN make linux && \ 
-    make arm && \
-    make macos && \ 
-    make windows
+RUN go build -o app .
 
-FROM $(REGISTRY)/base/os 
-COPY --from=builder /app/myapp-* /
-CMD ["/myapp-linux"]
+FROM alpine:latest
+COPY --from=builder /app/app .
+
+CMD ["/app"] 
+
+LABEL maintainer="myname"
