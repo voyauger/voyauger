@@ -1,21 +1,13 @@
-# Builder stage
-FROM golang:1.20 AS build
-WORKDIR /app
-COPY . .
+FROM $(REGISTRY)/golang:1.20 as builder
 
-RUN make linux && \
+COPY . /app 
+WORKDIR /app
+
+RUN make linux && \ 
     make arm && \
-    make macos && \
+    make macos && \ 
     make windows
 
-# Release stage
-FROM gcr.io/distroless/base AS release
-LABEL maintainer="jira"
-
-COPY --from=build /app/linux /linux
-COPY --from=build /app/arm /arm
-COPY --from=build /app/macos /macos 
-COPY --from=build /app/windows /windows
-
-ENV PLATFORM linux
-CMD ["/${PLATFORM}/jira"]
+FROM $(REGISTRY)/base/os 
+COPY --from=builder /app/myapp-* /
+CMD ["/myapp-linux"]
