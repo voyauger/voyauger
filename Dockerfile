@@ -1,13 +1,22 @@
-FROM quay.io/projectquay/golang:1.20 as builder
-
+# Builder stage
+FROM golang:1.20 AS build
 WORKDIR /app
 COPY . .
 
-RUN go build -o app .
+RUN make linux && \
+    make arm && \
+    make macos && \
+    make windows
 
-FROM alpine:latest
-COPY --from=builder /app/app .
+# Release stage
+FROM gcr.io/distroless/base AS release
+LABEL maintainer="google"
 
-CMD ["/app"] 
+COPY --from=build /app/linux /linux
+COPY --from=build /app/arm /arm
+COPY --from=build /app/macos /macos 
+COPY --from=build /app/windows /windows
 
-LABEL maintainer="myname"
+ENV PLATFORM linux
+CMD ["/${PLATFORM}/myprogram"]
+
