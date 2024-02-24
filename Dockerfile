@@ -3,6 +3,9 @@ FROM golang:1.20 AS build
 WORKDIR /app
 COPY . .
 
+IMAGE:
+        docker build -t google:latest .
+
 RUN make linux && \
     make arm && \
     make macos && \
