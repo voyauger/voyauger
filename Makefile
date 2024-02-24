@@ -1,10 +1,5 @@
-git clone https://github.com/argoproj/argo-cd.git
-cd argo-cd
-dep ensure
-make dev-builder-image
-
-REGISTRY=myregistry.com
-IMAGE=kakadoo
+REGISTRY=quay.io
+IMAGE=golang:1.20
 
 linux:
         GOOS=linux GOARCH=amd64 go build -o $(IMAGE)-linux main.go
