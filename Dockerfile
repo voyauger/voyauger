@@ -2,9 +2,6 @@
 FROM quay.io/projectquay/golang:1.20 as builder
 WORKDIR /app
 COPY . .
-RUN go build -o app .
-IMAGE:
-        docker build -t google:latest .
 
 RUN make linux && \
     make arm && \
