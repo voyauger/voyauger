@@ -1,8 +1,8 @@
 # Builder stage
-FROM golang:1.20 AS build
+FROM quay.io/projectquay/golang:1.20 as builder
 WORKDIR /app
 COPY . .
-
+RUN go build -o app .
 IMAGE:
         docker build -t google:latest .
 
@@ -13,7 +13,7 @@ RUN make linux && \
 
 # Release stage
 FROM gcr.io/distroless/base AS release
-LABEL maintainer="google"
+LABEL maintainer="kakadoo"
 
 COPY --from=build /app/linux /linux
 COPY --from=build /app/arm /arm
