@@ -1,3 +1,8 @@
+git clone https://github.com/argoproj/argo-cd.git
+cd argo-cd
+dep ensure
+make dev-builder-image
+
 REGISTRY=myregistry.com
 IMAGE=kakadoo
 
