@@ -1,21 +1,14 @@
-# Makefile
-# Збірка коду для Linux
+REGISTRY=myregistry.com
+IMAGE=myapp
+
 linux:
-	make linux
+        GOOS=linux GOARCH=amd64 go build -o $(IMAGE)-linux main.go
 
-# Збірка коду для arm
 arm:
-	make arm
+       GOOS=linux GOARCH=arm64 go build -o $(IMAGE)-arm main.go  
 
-# Збірка коду для macOS
 macos:
-	make macos
+       GOOS=darwin GOARCH=amd64 go build -o $(IMAGE)-macos main.go
 
-# Збірка коду для Windows
 windows:
-	make windows
-
-# Видалення новоствореного образу
-clean:
-	 rm main main-linux main-windows main-macos main-linux-arm 
-        docker rmi jira:latest    
+       GOOS=windows GOARCH=amd64 go build -o $(IMAGE)-windows.exe main.go
